@@ -1,11 +1,5 @@
 import pandas as pd
 
-import os
-
-import matplotlib.pyplot as plt
-
-import numpy as np
-
 rankings = pd.read_csv('rankings_cp_1500.csv')
 
 #print(rankings.head())
@@ -22,7 +16,7 @@ usage_typings_and_weaknesses = pd.merge(usage_stats, pokemon_typings_and_weaknes
 
 print(usage_typings_and_weaknesses.head(1))
 
-usage_typings_and_weaknesses.fillna('n/a')
+usage_typings_and_weaknesses.fillna('n/a', inplace=True)
 
 usage_typings_and_weaknesses.to_csv('usage_typings_and_weaknesses.csv')
 
@@ -30,12 +24,12 @@ usage_typings_and_weaknesses.to_csv('usage_typings_and_weaknesses.csv')
 
 tournament_details = pd.read_csv('tournament_detail.csv')
 
-print(tournament_details.isnull())
+#print(tournament_details.isnull())
 
-print(tournament_details[3:8])
+#print(tournament_details[3:8])
 
 tournament_details['Region'].fillna('North America', limit = 4, inplace = True)
-print(tournament_details)
+#print(tournament_details)
 
 total_tournament_details = pd.merge(usage_typings_and_weaknesses, tournament_details, how = 'inner', on = 'Tournament')
 
@@ -55,7 +49,7 @@ total_tournament_details.to_csv('total_tournament_data_ws.csv')
 
 matchups = pd.read_csv('Top 200 vs Meta - Matchup Scores.csv')
 
-print(matchups.head())
+#print(matchups.head())
 
 matchups['Pokemon'] = matchups['Unnamed: 0']
 
@@ -65,15 +59,15 @@ meta_list = []
 
 for i in matchups.head(): meta_list.append(i)
 
-print(meta_list)
+#print(meta_list)
 
 del meta_list[-1]
 
-print(meta_list)
+#print(meta_list)
 
 matchups_shaped = pd.melt(frame=matchups, id_vars='Pokemon', value_vars=meta_list, value_name = 'Battle Rating', var_name='Opposing Pokemon' )
 
-print(matchups_shaped.dtypes)
+#print(matchups_shaped.dtypes)
 
 matchups_num = matchups_shaped.select_dtypes(int)
 #print(matchups_num)
